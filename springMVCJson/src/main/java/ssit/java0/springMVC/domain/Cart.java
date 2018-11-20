@@ -1,13 +1,15 @@
 package ssit.java0.springMVC.domain;
 
+import java.util.List;
+
 public class Cart {
     private int orderId;
-    private CartItem cartItem;
+    private List<CartItem> cartItems;
     private double total;
 
-    public Cart(int orderId, CartItem cartItem, double total) {
+    public Cart(int orderId, List<CartItem> cartItems, double total) {
         this.orderId = orderId;
-        this.cartItem = cartItem;
+        this.cartItems = cartItems;
         this.total = total;
     }
 
@@ -19,12 +21,12 @@ public class Cart {
         this.orderId = cartId;
     }
 
-    public CartItem getCartItem() {
-        return cartItem;
+    public List<CartItem> getCartItem() {
+        return cartItems;
     }
 
-    public void setCartItem(CartItem cartItem) {
-        this.cartItem = cartItem;
+    public void setCartItems(List<CartItem> cartItems) {
+        this.cartItems= cartItems;
     }
 
     public double getTotal() {

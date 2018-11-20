@@ -55,7 +55,6 @@ public class UserDAOimpl implements UserDAO {
     @Override
     public String checkCredential(String token) throws EmptyResultDataAccessException{
         String sql="SELECT role FROM users WHERE token='"+token+"'";
-        System.out.println(sql);
         String role=jdbcTemplate.queryForObject(sql, new RowMapper<String>() {
             @Override
             public String mapRow(ResultSet resultSet, int i) throws SQLException {

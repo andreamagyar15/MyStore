@@ -3,8 +3,9 @@ package ssit.java0.springMVC.domain;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
-public class CartItem {
+public class CartItem  {
     @NotNull
     private int productid;
     @NotNull
@@ -37,4 +38,5 @@ public class CartItem {
     public void setProductType(ProductType productType) {
         this.productType = productType;
     }
+
 }

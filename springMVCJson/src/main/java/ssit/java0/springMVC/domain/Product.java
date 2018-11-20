@@ -9,20 +9,21 @@ public class Product {
     private double price;
     private int amount;
     private  int size;
-    private String imgUrl;
     private Date arrival;
+    private byte[] image;
+    private int imageId;
 
     public Product(){
 
     }
-    public Product(int id, String title, String description, double price, int amount, int size, String imgUrl, Date arrival) {
+    public Product(int id, String title, String description, double price, int amount, int size, byte[] image, Date arrival) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.price = price;
         this.amount = amount;
         this.size = size;
-        this.imgUrl = imgUrl;
+        this.image=image;
         this.arrival = arrival;
     }
 
@@ -74,13 +75,6 @@ public class Product {
         this.size = size;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
-    }
 
     public Date getArrival() {
         return arrival;
@@ -88,6 +82,22 @@ public class Product {
 
     public void setArrival(Date arrival) {
         this.arrival = arrival;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] imageId) {
+        this.image = imageId;
+    }
+
+    public void setImageId(int imageId) {
+        this.imageId = imageId;
+    }
+
+    public int getImageId() {
+        return imageId;
     }
 
     @Override
@@ -99,7 +109,6 @@ public class Product {
                 ", price=" + price +
                 ", amount=" + amount +
                 ", size=" + size +
-                ", imgUrl='" + imgUrl + '\'' +
                 ", arrival='" + arrival + '\'' +
                 '}';
     }

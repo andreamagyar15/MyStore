@@ -7,7 +7,7 @@ import ssit.java0.springMVC.DAO.UserDAO;
 import ssit.java0.springMVC.domain.JWTToken;
 import ssit.java0.springMVC.domain.Role;
 import ssit.java0.springMVC.domain.User;
-import ssit.java0.springMVC.dto.UserRepons;
+import ssit.java0.springMVC.dto.UserReponse;
 
 @Service
 public class UserServiceImpl  implements UserService {
@@ -21,7 +21,7 @@ public class UserServiceImpl  implements UserService {
      * @return UserRespons object with the role and the token
      */
     @Override
-    public UserRepons login(String username, String pass) {
+    public UserReponse login(String username, String pass) {
         User  user = new User();
         user.setUsername(username);
         user.setPassword(pass);
@@ -32,7 +32,7 @@ public class UserServiceImpl  implements UserService {
             JWTToken token=new JWTToken(username);
             userDAO.setTokenForUser(username,token.getToken());
             String role=userDAO.checkCredential(token.getToken());
-            UserRepons userRepons=new UserRepons(Role.valueOf(role),token.getToken());
+            UserReponse userRepons=new UserReponse(Role.valueOf(role),token.getToken());
             return userRepons;
         }
     }

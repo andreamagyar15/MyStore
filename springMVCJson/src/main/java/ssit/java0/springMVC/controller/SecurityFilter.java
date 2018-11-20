@@ -49,39 +49,40 @@ public class SecurityFilter implements Filter {
 
         String url = ((HttpServletRequest) request).getRequestURL().toString();
         if (url.contains("secured")) {
-            if ("OPTIONS".equalsIgnoreCase(((HttpServletRequest) request).getMethod())) {
-                HttpServletResponse servletResponse = (HttpServletResponse) response;
-                servletResponse.setHeader("Access-Control-Allow-Origin", "*");
-                servletResponse.setHeader("Access-Control-Allow-Credentials", "true");
-                servletResponse.setHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, HEAD");
-                servletResponse.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization,X-Auth-Token");
-                servletResponse.setStatus(HttpServletResponse.SC_OK);
-            } else {
-                HttpServletRequest httpRequest = (HttpServletRequest) request;
-                String value = httpRequest.getHeader(TOKEN);
-                System.out.println(value);
-                String username = httpRequest.getHeader("Username");
-                if (value != null) {
-                    boolean valid = tokenService.isValidToken(value);
-                    Role userRole = userService.checkUserCredential(value);
-                    if (valid && Role.valueOf("ADMIN")==userRole) {
-                        HttpServletResponse servletResponse = (HttpServletResponse) response;
-                        //servletResponse.sendError(401);
-                        //servletResponse.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
-                        //servletResponse.setHeader("role", "ADMIN");
-                    } else {
-                        HttpServletResponse servletResponse = (HttpServletResponse) response;
-                        servletResponse.sendError(403);
-                        return;
-                    }
+            //if ("OPTIONS".equalsIgnoreCase(((HttpServletRequest) request).getMethod())) {
+            // HttpServletResponse servletResponse = (HttpServletResponse) response;
+            //servletResponse.setHeader("Access-Control-Allow-Origin", "*");
+            // servletResponse.setHeader("Access-Control-Allow-Credentials", "true");
+            //  servletResponse.setHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, HEAD");
+            //   servletResponse.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization,X-Auth-Token");
+            //   servletResponse.setStatus(HttpServletResponse.SC_OK);
+            //} else {
+            HttpServletRequest httpRequest = (HttpServletRequest) request;
+            String value = httpRequest.getHeader(TOKEN);
+            //System.out.println(value);
+            String username = httpRequest.getHeader("Username");
+            if (value != null) {
+                boolean valid = tokenService.isValidToken(value);
+                Role userRole = userService.checkUserCredential(value);
+                if (valid && Role.valueOf("ADMIN") == userRole) {
+                    HttpServletResponse servletResponse = (HttpServletResponse) response;
+                    //servletResponse.sendError(401);
+                    //servletResponse.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+                    //servletResponse.setHeader("role", "ADMIN");
                 } else {
                     HttpServletResponse servletResponse = (HttpServletResponse) response;
-                    servletResponse.sendError(404);
+                    servletResponse.sendError(403);
                     return;
                 }
+            } else {
+                HttpServletResponse servletResponse = (HttpServletResponse) response;
+                servletResponse.sendError(404);
+                return;
             }
+            //}
         }
-        chain.doFilter(request, response);
+            chain.doFilter(request, response);
+
     }
 
     @Override

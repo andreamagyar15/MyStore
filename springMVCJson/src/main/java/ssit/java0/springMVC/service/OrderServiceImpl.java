@@ -2,6 +2,7 @@ package ssit.java0.springMVC.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ssit.java0.springMVC.DAO.OrderDAO;
 import ssit.java0.springMVC.DAO.ProductDAO;
 import ssit.java0.springMVC.domain.CartItem;
@@ -33,6 +34,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional
     public int addToCart(int id, CartItem cartItem) {
         if (id == 0) {
             int newID= orderDAO.createOrder(cartItem);
@@ -49,12 +51,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional
     public void deleteFromCart(int id,int prodid) {
         //orderDAO.removeFromTotal(productType,id,prodid);
         orderDAO.deleteFromCart(id,prodid);
     }
 
     @Override
+    @Transactional
     public void checkout(int orderid) {
         orderDAO.checkout(orderid);
         decreaseQuantity(orderid);
@@ -83,6 +87,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional
     public void updateQuantity(int orderid, int quantity) {
         orderDAO.updateQuantity(orderid,quantity);
     }

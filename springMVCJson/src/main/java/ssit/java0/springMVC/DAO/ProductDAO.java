@@ -14,4 +14,6 @@ public interface ProductDAO {
     void updateProduct(ProductType prodType,int id,Product product);
     Product getProductById(ProductType productType,int id);
     void decreaseQuantityForProduct(int productid, ProductType productType, int quantity);
+    int uploadImageInDB(String name, byte[] imgByte);
+    List<Product> getSortedByDate();
 }

@@ -7,7 +7,7 @@ import ssit.java0.springMVC.service.MessageService;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*",allowedHeaders = "*", maxAge = 3600)
+//@CrossOrigin(origins = "*",allowedHeaders = "*", maxAge = 3600)
 @RestController
 public class MessageController {
     @Autowired

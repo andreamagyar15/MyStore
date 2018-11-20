@@ -10,9 +10,19 @@ public class CreateProductRequest {
     private double price;
     private int amount;
     private  int size;
-    private String imgUrl;
     private Date arrival;
     private ProductType prodType;
+    private String imageName;
+
+    public String getImageInput() {
+        return imageInput;
+    }
+
+    public void setImageInput(String imageInput) {
+        this.imageInput = imageInput;
+    }
+
+    private String imageInput;
 
     public ProductType getProdType() {
         return prodType;
@@ -61,20 +71,20 @@ public class CreateProductRequest {
         this.size = size;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
-    }
-
     public Date getArrival() {
         return arrival;
     }
 
     public void setArrival(Date arrival) {
         this.arrival = arrival;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 
     @Override
@@ -85,8 +95,9 @@ public class CreateProductRequest {
                 ", price=" + price +
                 ", amount=" + amount +
                 ", size=" + size +
-                ", imgUrl='" + imgUrl + '\'' +
+                '\'' +
                 ", arrival='" + arrival + '\'' +
                 '}';
     }
+
 }

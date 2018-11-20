@@ -2,12 +2,16 @@ package ssit.java0.springMVC.config;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
 
 @Configuration
+@EnableTransactionManagement
 public class ApplicationConfiguration {
     @Bean
     public JdbcTemplate jdbcTemplate() throws SQLException {
@@ -28,5 +32,9 @@ public class ApplicationConfiguration {
                 .append("&password=")
                 .append("testPASS").toString();
         return new SingleConnectionDataSource(url,false);
+    }
+    @Bean
+    public PlatformTransactionManager txManager() {
+        return new DataSourceTransactionManager(dataSource());
     }
 }

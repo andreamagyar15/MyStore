@@ -1,13 +1,15 @@
 package ssit.java0.springMVC.service;
 
-import com.fasterxml.jackson.databind.util.EnumValues;
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ssit.java0.springMVC.DAO.ProductDAO;
 import ssit.java0.springMVC.domain.Product;
 import ssit.java0.springMVC.domain.ProductType;
+import ssit.java0.springMVC.dto.ImageObjectBinary;
 
-import java.util.EnumSet;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,6 +23,7 @@ public class ProductServiceImpl implements ProductService {
         return productDAO.getAll();
     }
     @Override
+    @Transactional
     public void createProduct(Product product, String prodType) {
         try{
             ProductType enumType=ProductType.valueOf(prodType.toUpperCase());
@@ -50,6 +53,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public void deleteProduct(String type, int id) {
         try{
             ProductType enumType=ProductType.valueOf(type.toUpperCase());
@@ -60,6 +64,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public void updateProduct(ProductType type, int id,Product product) {
         try{
             ProductType enumType=ProductType.valueOf(type.name().toUpperCase());
@@ -69,5 +74,32 @@ public class ProductServiceImpl implements ProductService {
 
         }
 
+    }
+
+    /**
+     * Get the image array as String, convert in byte array, send to DB
+     * @return the add image id
+     * @throws IOException
+     */
+    @Override
+    public int uploadImage(ImageObjectBinary imageBinary) throws IOException {
+        String imageArray=imageBinary.getImageFileBinary();
+        String img=imageArray.substring(23);
+        byte[] stringim=Base64.decode(img);
+       // ByteArrayInputStream imgByte=new ByteArrayInputStream(stringim);
+        int imageId=productDAO.uploadImageInDB(imageBinary.getImageName(),stringim);
+       // Image image=ImageIO.read(new ByteArrayInputStream(stringim));
+       // BufferedImage bufIm=new BufferedImage(((BufferedImage) image).getWidth(),((BufferedImage) image).getHeight(),BufferedImage.TYPE_INT_RGB);
+       // Graphics2D imggr=bufIm.createGraphics();
+       // imggr.drawImage(image,null,null);
+       // File file= new File("D:\\JAVA2018\\springMVCJson\\src\\main\\resources\\static\\img",imageBinary.getImageName()+".jpg");
+       // ImageIO.write(bufIm,"jpg",file);
+        return imageId;
+    }
+
+    @Override
+    public List<Product> getSortedByDate() {
+        List<Product> productList =productDAO.getSortedByDate();
+        return productList;
     }
 }

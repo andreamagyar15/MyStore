@@ -1,18 +1,15 @@
 package ssit.java0.springMVC.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import ssit.java0.springMVC.domain.Information;
 import ssit.java0.springMVC.domain.JWTToken;
-import ssit.java0.springMVC.dto.UserRepons;
+import ssit.java0.springMVC.dto.UserReponse;
 import ssit.java0.springMVC.service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
-@CrossOrigin(origins = "*",allowedHeaders = "*", maxAge = 3600)
+//@CrossOrigin(origins = "*",allowedHeaders = "*", maxAge = 3600)
 @RestController
 public class LoginController {
 
@@ -55,9 +52,13 @@ public class LoginController {
      */
     @RequestMapping(value = "/auth/login", method = RequestMethod.POST)
     @ResponseBody
-    public UserRepons doLogin(String username, String password,
-                            HttpServletRequest request, HttpServletResponse response) throws IOException {
-        UserRepons userRepons = userService.login(username, password);
+    public UserReponse doLogin(String username, String password,
+                               HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if(username.isEmpty()||password.isEmpty()){
+            return null;
+        }
+        UserReponse userRepons = userService.login(username, password);
+
         if (userRepons.getJwtToken() == null) {
             HttpServletResponse servletResponse = (HttpServletResponse) response;
             servletResponse.sendError(401,"The user or password is not correct");
@@ -81,6 +82,9 @@ public class LoginController {
     @ResponseBody
     public JWTToken doRegister(String username, String password,
                             HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if(username.isEmpty()||password.isEmpty()){
+            return null;
+        }
         JWTToken token = userService.register(username, password);
         if (token == null) {
             HttpServletResponse servletResponse = (HttpServletResponse) response;

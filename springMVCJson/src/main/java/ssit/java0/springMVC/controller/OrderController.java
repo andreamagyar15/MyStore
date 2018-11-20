@@ -14,7 +14,7 @@ import ssit.java0.springMVC.service.OrderService;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*",allowedHeaders = "*", maxAge = 3600)
+//@CrossOrigin(origins = "*",allowedHeaders = "*", maxAge = 3600)
 @RestController
 public class OrderController {
 
